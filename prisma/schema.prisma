@@ -1,0 +1,117 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    ADMIN
+    NASABAH
+}
+
+enum STATUS {
+    PENDING
+    PROCESS
+    APPROVED
+    REJECTED
+}
+
+enum Jenis {
+    PLASTIK
+    KERTAS
+    LOGAM
+    KACA
+    ORGANIK
+}
+
+model User {
+    id       Int       @id @default(autoincrement())
+    username String
+    email    String    @unique
+    password String
+    role     Role      @default(NASABAH)
+    nasabah  Nasabah[]
+    admin    Admin[]
+    setorans Setoran[]
+}
+
+model Nasabah {
+    id           Int       @id @default(autoincrement())
+    nama_nasabah String    @db.VarChar(100)
+    alamat       String    @db.Text
+    telepon      String    @db.VarChar(20)
+    saldo_poin   Float     @db.Double @default(0)
+    userId       Int       @unique
+    foto         String    @db.VarChar(255)
+    user         User      @relation(fields: [userId], references: [id])
+    setoran      Setoran[]
+}
+
+model Admin {
+    id             Int       @id @default(autoincrement())
+    nama_unit      String    @db.VarChar(100)
+    nama_pengelola String    @db.VarChar(100)
+    telpon         String    @db.VarChar(20)
+    userId         Int       @unique
+    user           User      @relation(fields: [userId], references: [id])
+    setoran        Setoran[]
+}
+
+model Setoran {
+    id            Int             @id @default(autoincrement())
+    nasabahId     Int
+    adminId       Int
+    userId        Int
+    jumlah        Float           @db.Double
+    tanggal       DateTime        @db.Date
+    status        STATUS          @default(PENDING)
+    nasabah       Nasabah         @relation(fields: [nasabahId], references: [id])
+    admin         Admin           @relation(fields: [adminId], references: [id])
+    user          User            @relation(fields: [userId], references: [id])
+    detailSetoran DetailSetoran[]
+}
+
+model Kategori {
+    id            Int             @id @default(autoincrement())
+    nama_kategori String          @db.VarChar(100)
+    harga_perKilo Float           @db.Double
+    poin_perKilo  Float           @db.Double
+    jenis_sampaj  Jenis
+    foto          String          @db.VarChar(255)
+    detailSetoran DetailSetoran[]
+    penukaran     Penukaran[]
+}
+
+model DetailSetoran {
+    id             Int      @id @default(autoincrement())
+    setoranId      Int
+    kategoriId     Int
+    berat_kg       Float    @db.Double
+    sub_totalPoint Float    @db.Double
+    setoran        Setoran  @relation(fields: [setoranId], references: [id])
+    kategori       Kategori @relation(fields: [kategoriId], references: [id])
+}
+
+model Penukaran {
+    id            Int      @id @default(autoincrement())
+    kategoriId    Int
+    hadiahId      Int
+    poin_terpakai Float    @db.Double
+    sisa_point    Float    @db.Double
+    tanggal       DateTime @db.Date
+    status        STATUS   @default(PENDING)
+    kategori      Kategori @relation(fields: [kategoriId], references: [id])
+    hadiah        Hadiah   @relation(fields: [hadiahId], references: [id])
+}
+
+model Hadiah {
+    id              Int         @id @default(autoincrement())
+    nama_hadiah     String      @db.VarChar(100)
+    poin_dibutuhkan Float       @db.Double
+    stock           Int
+    foto            String      @db.VarChar(255)
+    penukaran       Penukaran[]
+}
