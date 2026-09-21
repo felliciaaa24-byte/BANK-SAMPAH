@@ -4,15 +4,15 @@ import { UpdateNasabahDto } from './dto/update-nasabah.dto';
 export declare class NasabahController {
     private readonly nasabahService;
     constructor(nasabahService: NasabahService);
-    create(createNasabahDto: CreateNasabahDto): import(".prisma/client").Prisma.Prisma__NasabahClient<{
+    create(createNasabahDto: CreateNasabahDto, req: any): Promise<{
+        id: number;
+        foto: string;
+        userId: number;
         nama_nasabah: string;
         alamat: string;
         telepon: string;
         saldo_poin: number;
-        foto: string;
-        id: number;
-        userId: number;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         user: {
             id: number;
@@ -22,22 +22,22 @@ export declare class NasabahController {
             role: import(".prisma/client").$Enums.Role;
         };
         setoran: {
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
             id: number;
             userId: number;
             nasabahId: number;
-            adminId: number;
+            adminId: number | null;
             jumlah: number;
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
         }[];
     } & {
+        id: number;
+        foto: string;
+        userId: number;
         nama_nasabah: string;
         alamat: string;
         telepon: string;
         saldo_poin: number;
-        foto: string;
-        id: number;
-        userId: number;
     })[]>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__NasabahClient<({
         user: {
@@ -48,39 +48,39 @@ export declare class NasabahController {
             role: import(".prisma/client").$Enums.Role;
         };
         setoran: {
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
             id: number;
             userId: number;
             nasabahId: number;
-            adminId: number;
+            adminId: number | null;
             jumlah: number;
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
         }[];
     } & {
+        id: number;
+        foto: string;
+        userId: number;
         nama_nasabah: string;
         alamat: string;
         telepon: string;
         saldo_poin: number;
-        foto: string;
-        id: number;
-        userId: number;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
-    update(id: string, updateNasabahDto: UpdateNasabahDto): import(".prisma/client").Prisma.Prisma__NasabahClient<{
+    update(id: string, updateNasabahDto: UpdateNasabahDto): Promise<{
+        id: number;
+        foto: string;
+        userId: number;
         nama_nasabah: string;
         alamat: string;
         telepon: string;
         saldo_poin: number;
-        foto: string;
-        id: number;
-        userId: number;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__NasabahClient<{
+        id: number;
+        foto: string;
+        userId: number;
         nama_nasabah: string;
         alamat: string;
         telepon: string;
         saldo_poin: number;
-        foto: string;
-        id: number;
-        userId: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

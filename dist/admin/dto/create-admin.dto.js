@@ -36,9 +36,4 @@ __decorate([
     (0, class_validator_1.MaxLength)(20),
     __metadata("design:type", String)
 ], CreateAdminDto.prototype, "telpon", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 1 }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateAdminDto.prototype, "userId", void 0);
 //# sourceMappingURL=create-admin.dto.js.map

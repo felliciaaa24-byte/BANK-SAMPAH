@@ -36,16 +36,6 @@ __decorate([
     __metadata("design:type", String)
 ], CreateNasabahDto.prototype, "telepon", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 0 }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateNasabahDto.prototype, "saldo_poin", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 1 }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateNasabahDto.prototype, "userId", void 0);
-__decorate([
     (0, swagger_1.ApiProperty)({ example: 'foto.jpg' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),

@@ -6,57 +6,57 @@ export declare class HadiahController {
     constructor(hadiahService: HadiahService);
     create(createHadiahDto: CreateHadiahDto): import(".prisma/client").Prisma.Prisma__HadiahClient<{
         id: number;
-        foto: string;
         nama_hadiah: string;
         poin_dibutuhkan: number;
         stock: number;
+        foto: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         penukaran: {
-            id: number;
-            kategoriId: number;
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
-            hadiahId: number;
             poin_terpakai: number;
             sisa_point: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
+            id: number;
+            kategoriId: number;
+            hadiahId: number;
         }[];
     } & {
         id: number;
-        foto: string;
         nama_hadiah: string;
         poin_dibutuhkan: number;
         stock: number;
+        foto: string;
     })[]>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__HadiahClient<({
         penukaran: {
-            id: number;
-            kategoriId: number;
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
-            hadiahId: number;
             poin_terpakai: number;
             sisa_point: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
+            id: number;
+            kategoriId: number;
+            hadiahId: number;
         }[];
     } & {
         id: number;
-        foto: string;
         nama_hadiah: string;
         poin_dibutuhkan: number;
         stock: number;
+        foto: string;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, updateHadiahDto: UpdateHadiahDto): import(".prisma/client").Prisma.Prisma__HadiahClient<{
         id: number;
-        foto: string;
         nama_hadiah: string;
         poin_dibutuhkan: number;
         stock: number;
+        foto: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__HadiahClient<{
         id: number;
-        foto: string;
         nama_hadiah: string;
         poin_dibutuhkan: number;
         stock: number;
+        foto: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

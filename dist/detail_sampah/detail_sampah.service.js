@@ -12,13 +12,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DetailSetoranService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const common_2 = require("@nestjs/common");
 let DetailSetoranService = class DetailSetoranService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createDetailSetoranDto) {
+    async create(createDetailSetoranDto) {
+        const kategori = await this.prisma.kategori.findUnique({
+            where: {
+                id: createDetailSetoranDto.kategoriId,
+            },
+        });
+        if (!kategori) {
+            throw new common_2.NotFoundException('Kategori sampah tidak ditemukan');
+        }
+        const subTotalPoint = kategori.poin_perKilo * createDetailSetoranDto.berat_kg;
         return this.prisma.detailSetoran.create({
-            data: createDetailSetoranDto,
+            data: {
+                setoranId: createDetailSetoranDto.setoranId,
+                kategoriId: createDetailSetoranDto.kategoriId,
+                berat_kg: createDetailSetoranDto.berat_kg,
+                sub_totalPoint: subTotalPoint,
+            },
+            include: {
+                kategori: true,
+                setoran: true,
+            },
         });
     }
     findAll() {

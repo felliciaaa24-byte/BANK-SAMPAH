@@ -14,9 +14,9 @@ export declare class HadiahService {
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         penukaran: {
             id: number;
-            kategoriId: number;
             tanggal: Date;
             status: import(".prisma/client").$Enums.STATUS;
+            kategoriId: number;
             hadiahId: number;
             poin_terpakai: number;
             sisa_point: number;
@@ -31,9 +31,9 @@ export declare class HadiahService {
     findOne(id: number): import(".prisma/client").Prisma.Prisma__HadiahClient<({
         penukaran: {
             id: number;
-            kategoriId: number;
             tanggal: Date;
             status: import(".prisma/client").$Enums.STATUS;
+            kategoriId: number;
             hadiahId: number;
             poin_terpakai: number;
             sisa_point: number;

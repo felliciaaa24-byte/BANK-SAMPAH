@@ -18,12 +18,17 @@ const swagger_1 = require("@nestjs/swagger");
 const nasabah_service_1 = require("./nasabah.service");
 const create_nasabah_dto_1 = require("./dto/create-nasabah.dto");
 const update_nasabah_dto_1 = require("./dto/update-nasabah.dto");
+const jwt_guard_1 = require("../auth/jwt.guard");
+const roles_guard_1 = require("../auth/roles.guard");
+const roles_decorator_1 = require("../auth/roles.decorator");
+const swagger_2 = require("@nestjs/swagger");
+const common_2 = require("@nestjs/common");
 let NasabahController = class NasabahController {
     constructor(nasabahService) {
         this.nasabahService = nasabahService;
     }
-    create(createNasabahDto) {
-        return this.nasabahService.create(createNasabahDto);
+    create(createNasabahDto, req) {
+        return this.nasabahService.create(createNasabahDto, req.user.id);
     }
     findAll() {
         return this.nasabahService.findAll();
@@ -41,19 +46,29 @@ let NasabahController = class NasabahController {
 exports.NasabahController = NasabahController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_nasabah_dto_1.CreateNasabahDto]),
+    __metadata("design:paramtypes", [create_nasabah_dto_1.CreateNasabahDto, Object]),
     __metadata("design:returntype", void 0)
 ], NasabahController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], NasabahController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -61,6 +76,9 @@ __decorate([
 ], NasabahController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -69,6 +87,9 @@ __decorate([
 ], NasabahController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

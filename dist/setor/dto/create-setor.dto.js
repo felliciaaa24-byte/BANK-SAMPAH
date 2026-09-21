@@ -20,25 +20,7 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateSetoranDto.prototype, "nasabahId", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 1 }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
 ], CreateSetoranDto.prototype, "adminId", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 1 }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], CreateSetoranDto.prototype, "userId", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 5.5 }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], CreateSetoranDto.prototype, "jumlah", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '2026-09-15',

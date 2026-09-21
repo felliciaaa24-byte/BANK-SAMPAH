@@ -13,6 +13,11 @@ import { ApiTags } from '@nestjs/swagger';
 import { HadiahService } from './hadiah.service';
 import { CreateHadiahDto } from './dto/create-hadiah.dto';
 import { UpdateHadiahDto } from './dto/update-hadiah.dto';
+import { JwtAuthGuard } from '../auth/jwt.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { UseGuards } from '@nestjs/common';
 
 @ApiTags('Hadiah')
 @Controller('hadiah')
@@ -22,6 +27,9 @@ export class HadiahController {
   ) {}
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('PEMILIK')
   create(@Body() createHadiahDto: CreateHadiahDto) {
     return this.hadiahService.create(createHadiahDto);
   }
@@ -37,6 +45,9 @@ export class HadiahController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('PEMILIK')
   update(
     @Param('id') id: string,
     @Body() updateHadiahDto: UpdateHadiahDto,
@@ -48,6 +59,9 @@ export class HadiahController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('PEMILIK')
   remove(@Param('id') id: string) {
     return this.hadiahService.remove(+id);
   }

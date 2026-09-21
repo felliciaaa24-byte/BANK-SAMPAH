@@ -12,67 +12,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetoranService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const common_2 = require("@nestjs/common");
 let SetoranService = class SetoranService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createSetoranDto) {
+    async create(dto, userId) {
+        const nasabah = await this.prisma.nasabah.findUnique({
+            where: {
+                userId: userId,
+            },
+        });
+        if (!nasabah) {
+            throw new common_2.NotFoundException('Anda belum terdaftar sebagai nasabah');
+        }
+        const admin = await this.prisma.admin.findUnique({
+            where: {
+                id: dto.adminId,
+            },
+        });
+        if (!admin) {
+            throw new common_2.NotFoundException('Lokasi penyetoran tidak ditemukan');
+        }
         return this.prisma.setoran.create({
             data: {
-                nasabahId: createSetoranDto.nasabahId,
-                adminId: createSetoranDto.adminId,
-                userId: createSetoranDto.userId,
-                jumlah: createSetoranDto.jumlah,
-                tanggal: new Date(createSetoranDto.tanggal),
+                nasabahId: nasabah.id,
+                adminId: dto.adminId,
+                userId: userId,
+                jumlah: 0,
+                tanggal: new Date(dto.tanggal),
+                status: 'PENDING',
             },
-        });
-    }
-    findAll() {
-        return this.prisma.setoran.findMany({
             include: {
                 nasabah: true,
                 admin: true,
-                user: true,
                 detailSetoran: true,
             },
-        });
-    }
-    findOne(id) {
-        return this.prisma.setoran.findUnique({
-            where: { id },
-            include: {
-                nasabah: true,
-                admin: true,
-                user: true,
-                detailSetoran: true,
-            },
-        });
-    }
-    update(id, updateSetoranDto) {
-        return this.prisma.setoran.update({
-            where: { id },
-            data: {
-                ...(updateSetoranDto.nasabahId !== undefined && {
-                    nasabahId: updateSetoranDto.nasabahId,
-                }),
-                ...(updateSetoranDto.adminId !== undefined && {
-                    adminId: updateSetoranDto.adminId,
-                }),
-                ...(updateSetoranDto.userId !== undefined && {
-                    userId: updateSetoranDto.userId,
-                }),
-                ...(updateSetoranDto.jumlah !== undefined && {
-                    jumlah: updateSetoranDto.jumlah,
-                }),
-                ...(updateSetoranDto.tanggal !== undefined && {
-                    tanggal: new Date(updateSetoranDto.tanggal),
-                }),
-            },
-        });
-    }
-    remove(id) {
-        return this.prisma.setoran.delete({
-            where: { id },
         });
     }
 };

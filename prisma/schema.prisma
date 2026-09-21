@@ -10,6 +10,7 @@ datasource db {
 enum Role {
     ADMIN
     NASABAH
+    PEMILIK
 }
 
 enum STATUS {
@@ -33,7 +34,7 @@ model User {
     email    String    @unique
     password String
     role     Role      @default(NASABAH)
-    nasabah  Nasabah[]
+    nasabah  Nasabah?
     admin    Admin[]
     setorans Setoran[]
 }
@@ -56,20 +57,21 @@ model Admin {
     nama_pengelola String    @db.VarChar(100)
     telpon         String    @db.VarChar(20)
     userId         Int       @unique
-    user           User      @relation(fields: [userId], references: [id])
     setoran        Setoran[]
+    user           User      @relation(fields: [userId], references: [id])
+    
 }
 
 model Setoran {
     id            Int             @id @default(autoincrement())
     nasabahId     Int
-    adminId       Int
+    adminId       Int?
     userId        Int
     jumlah        Float           @db.Double
     tanggal       DateTime        @db.Date
     status        STATUS          @default(PENDING)
     nasabah       Nasabah         @relation(fields: [nasabahId], references: [id])
-    admin         Admin           @relation(fields: [adminId], references: [id])
+     admin         Admin?          @relation(fields: [adminId], references: [id])
     user          User            @relation(fields: [userId], references: [id])
     detailSetoran DetailSetoran[]
 }

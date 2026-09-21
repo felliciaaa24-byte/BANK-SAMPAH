@@ -7,9 +7,14 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createAdminDto: CreateAdminDto) {
+  async create(dto: CreateAdminDto,  userId: number) {
     return this.prisma.admin.create({
-      data: createAdminDto,
+      data: {
+        nama_unit : dto.nama_unit,
+        nama_pengelola : dto.nama_pengelola,
+        telpon : dto.telpon,
+        userId: userId,
+      },
     });
   }
 

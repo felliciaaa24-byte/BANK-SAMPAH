@@ -24,14 +24,6 @@ export class CreateNasabahDto {
   @MaxLength(20)
   telepon!: string;
 
-  @ApiProperty({ example: 0 })
-  @IsNumber()
-  saldo_poin!: number;
-
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  userId!: number;
-
   @ApiProperty({ example: 'foto.jpg' })
   @IsString()
   @IsNotEmpty()

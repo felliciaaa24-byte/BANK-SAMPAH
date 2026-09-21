@@ -16,16 +16,6 @@ export class CreatePenukaranDto {
   @IsNotEmpty()
   hadiahId!: number;
 
-  @ApiProperty({ example: 500 })
-  @IsNumber()
-  @IsNotEmpty()
-  poin_terpakai!: number;
-
-  @ApiProperty({ example: 500 })
-  @IsNumber()
-  @IsNotEmpty()
-  sisa_point!: number;
-
   @ApiProperty({ example: '2026-09-15' })
   @IsDateString()
   @IsNotEmpty()

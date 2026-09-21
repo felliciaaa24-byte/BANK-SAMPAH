@@ -18,12 +18,17 @@ const swagger_1 = require("@nestjs/swagger");
 const penukaran_point_service_1 = require("./penukaran_point.service");
 const create_penukaran_point_dto_1 = require("./dto/create-penukaran_point.dto");
 const update_penukaran_point_dto_1 = require("./dto/update-penukaran_point.dto");
+const jwt_guard_1 = require("../auth/jwt.guard");
+const roles_guard_1 = require("../auth/roles.guard");
+const roles_decorator_1 = require("../auth/roles.decorator");
+const swagger_2 = require("@nestjs/swagger");
+const common_2 = require("@nestjs/common");
 let PenukaranController = class PenukaranController {
     constructor(penukaranService) {
         this.penukaranService = penukaranService;
     }
-    create(createPenukaranDto) {
-        return this.penukaranService.create(createPenukaranDto);
+    create(createPenukaranDto, req) {
+        return this.penukaranService.create(createPenukaranDto, req.user.id);
     }
     findAll() {
         return this.penukaranService.findAll();
@@ -41,13 +46,20 @@ let PenukaranController = class PenukaranController {
 exports.PenukaranController = PenukaranController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_penukaran_point_dto_1.CreatePenukaranDto]),
+    __metadata("design:paramtypes", [create_penukaran_point_dto_1.CreatePenukaranDto, Object]),
     __metadata("design:returntype", void 0)
 ], PenukaranController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -61,6 +73,10 @@ __decorate([
 ], PenukaranController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.Post)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -69,6 +85,9 @@ __decorate([
 ], PenukaranController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

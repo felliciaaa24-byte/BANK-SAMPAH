@@ -20,8 +20,4 @@ export class CreateDetailSetoranDto {
   @IsNotEmpty()
   berat_kg!: number;
 
-  @ApiProperty({ example: 25 })
-  @IsNumber()
-  @IsNotEmpty()
-  sub_totalPoint!: number;
 }

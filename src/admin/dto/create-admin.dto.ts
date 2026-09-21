@@ -25,7 +25,5 @@ export class CreateAdminDto {
   @MaxLength(20)
   telpon!: string;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  userId!: number;
+
 }

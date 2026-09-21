@@ -32,28 +32,31 @@ let AuthService = class AuthService {
     }
     async login(dto) {
         const user = await this.prisma.user.findUnique({
-            where: {
-                email: dto.email,
+            where: { email: dto.email },
+            include: {
+                nasabah: true,
             },
         });
         if (!user) {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('Email atau password salah');
         }
         const valid = await bcrypt.compare(dto.password, user.password);
         if (!valid) {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('Email atau password salah');
         }
         return {
             access_token: this.jwtService.sign({
                 sub: user.id,
                 email: user.email,
                 role: user.role,
+                nasabahId: user.nasabah?.id ?? null,
             }),
             user: {
                 id: user.id,
                 username: user.username,
                 email: user.email,
                 role: user.role,
+                nasabahId: user.nasabah?.id ?? null,
             },
         };
     }

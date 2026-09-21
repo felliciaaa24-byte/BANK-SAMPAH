@@ -7,11 +7,18 @@ import { UpdateNasabahDto } from './dto/update-nasabah.dto';
 export class NasabahService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createNasabahDto: CreateNasabahDto) {
-    return this.prisma.nasabah.create({
-      data: createNasabahDto,
-    });
-  }
+  async create(dto: CreateNasabahDto, userId: number) {
+  return this.prisma.nasabah.create({
+    data: {
+      nama_nasabah: dto.nama_nasabah,
+      alamat: dto.alamat,
+      telepon: dto.telepon,
+      foto: dto.foto,
+      saldo_poin: 0,
+      userId: userId,
+    },
+  });
+}
 
   findAll() {
     return this.prisma.nasabah.findMany({
@@ -32,12 +39,17 @@ export class NasabahService {
     });
   }
 
-  update(id: number, updateNasabahDto: UpdateNasabahDto) {
-    return this.prisma.nasabah.update({
-      where: { id },
-      data: updateNasabahDto,
-    });
-  }
+  async update(id: number, dto: UpdateNasabahDto) {
+  return this.prisma.nasabah.update({
+    where: { id },
+    data: {
+      nama_nasabah: dto.nama_nasabah,
+      alamat: dto.alamat,
+      telepon: dto.telepon,
+      foto: dto.foto,
+    },
+  });
+}
 
   remove(id: number) {
     return this.prisma.nasabah.delete({

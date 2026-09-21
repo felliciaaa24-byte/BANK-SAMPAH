@@ -28,18 +28,6 @@ __decorate([
     __metadata("design:type", Number)
 ], CreatePenukaranDto.prototype, "hadiahId", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 500 }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], CreatePenukaranDto.prototype, "poin_terpakai", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 500 }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], CreatePenukaranDto.prototype, "sisa_point", void 0);
-__decorate([
     (0, swagger_1.ApiProperty)({ example: '2026-09-15' }),
     (0, class_validator_1.IsDateString)(),
     (0, class_validator_1.IsNotEmpty)(),

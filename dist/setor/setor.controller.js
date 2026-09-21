@@ -17,63 +17,30 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const setor_service_1 = require("./setor.service");
 const create_setor_dto_1 = require("./dto/create-setor.dto");
-const update_setor_dto_1 = require("./dto/update-setor.dto");
+const jwt_guard_1 = require("../auth/jwt.guard");
+const roles_guard_1 = require("../auth/roles.guard");
+const roles_decorator_1 = require("../auth/roles.decorator");
+const swagger_2 = require("@nestjs/swagger");
 let SetoranController = class SetoranController {
     constructor(setoranService) {
         this.setoranService = setoranService;
     }
-    create(createSetoranDto) {
-        return this.setoranService.create(createSetoranDto);
-    }
-    findAll() {
-        return this.setoranService.findAll();
-    }
-    findOne(id) {
-        return this.setoranService.findOne(+id);
-    }
-    update(id, updateSetoranDto) {
-        return this.setoranService.update(+id, updateSetoranDto);
-    }
-    remove(id) {
-        return this.setoranService.remove(+id);
+    create(createSetoranDto, req) {
+        return this.setoranService.create(createSetoranDto, req.user.id);
     }
 };
 exports.SetoranController = SetoranController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_setor_dto_1.CreateSetoranDto]),
+    __metadata("design:paramtypes", [create_setor_dto_1.CreateSetoranDto, Object]),
     __metadata("design:returntype", void 0)
 ], SetoranController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], SetoranController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], SetoranController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_setor_dto_1.UpdateSetoranDto]),
-    __metadata("design:returntype", void 0)
-], SetoranController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], SetoranController.prototype, "remove", null);
 exports.SetoranController = SetoranController = __decorate([
     (0, swagger_1.ApiTags)('Setoran'),
     (0, common_1.Controller)('setoran'),

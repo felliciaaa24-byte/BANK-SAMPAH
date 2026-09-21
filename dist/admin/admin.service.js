@@ -16,9 +16,14 @@ let AdminService = class AdminService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createAdminDto) {
+    async create(dto, userId) {
         return this.prisma.admin.create({
-            data: createAdminDto,
+            data: {
+                nama_unit: dto.nama_unit,
+                nama_pengelola: dto.nama_pengelola,
+                telpon: dto.telpon,
+                userId: userId,
+            },
         });
     }
     findAll() {

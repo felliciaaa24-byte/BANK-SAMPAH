@@ -33,10 +33,4 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateDetailSetoranDto.prototype, "berat_kg", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 25 }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], CreateDetailSetoranDto.prototype, "sub_totalPoint", void 0);
 //# sourceMappingURL=create-detail_sampah.dto.js.map

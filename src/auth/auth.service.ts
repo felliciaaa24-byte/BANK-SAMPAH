@@ -29,39 +29,39 @@ export class AuthService {
     });
   }
 
-  async login(dto: LoginDto) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
+ async login(dto: LoginDto) {
+  const user = await this.prisma.user.findUnique({
+    where: { email: dto.email },
+    include: {
+      nasabah: true,
+    },
+  });
 
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    const valid = await bcrypt.compare(
-      dto.password,
-      user.password,
-    );
-
-    if (!valid) {
-      throw new UnauthorizedException();
-    }
-
-    return {
-      access_token: this.jwtService.sign({
-        sub: user.id,
-        email: user.email,
-        role: user.role,
-      }),
-
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
-    };
+  if (!user) {
+    throw new UnauthorizedException('Email atau password salah');
   }
+
+  const valid = await bcrypt.compare(dto.password, user.password);
+
+  if (!valid) {
+    throw new UnauthorizedException('Email atau password salah');
+  }
+
+  return {
+    access_token: this.jwtService.sign({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      nasabahId: user.nasabah?.id ?? null,
+    }),
+
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      nasabahId: user.nasabah?.id ?? null,
+    },
+  };
+}
 }

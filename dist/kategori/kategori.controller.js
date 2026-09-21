@@ -18,6 +18,11 @@ const swagger_1 = require("@nestjs/swagger");
 const kategori_service_1 = require("./kategori.service");
 const create_kategori_dto_1 = require("./dto/create-kategori.dto");
 const update_kategori_dto_1 = require("./dto/update-kategori.dto");
+const jwt_guard_1 = require("../auth/jwt.guard");
+const roles_guard_1 = require("../auth/roles.guard");
+const roles_decorator_1 = require("../auth/roles.decorator");
+const swagger_2 = require("@nestjs/swagger");
+const common_2 = require("@nestjs/common");
 let KategoriController = class KategoriController {
     constructor(kategoriService) {
         this.kategoriService = kategoriService;
@@ -41,6 +46,9 @@ let KategoriController = class KategoriController {
 exports.KategoriController = KategoriController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('PEMILIK'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_kategori_dto_1.CreateKategoriDto]),
@@ -61,6 +69,9 @@ __decorate([
 ], KategoriController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('PEMILIK'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -69,6 +80,9 @@ __decorate([
 ], KategoriController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('PEMILIK'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -4,18 +4,36 @@ import { UpdateDetailSetoranDto } from './dto/update-detail_sampah.dto';
 export declare class DetailSetoranService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(createDetailSetoranDto: CreateDetailSetoranDto): import(".prisma/client").Prisma.Prisma__DetailSetoranClient<{
+    create(createDetailSetoranDto: CreateDetailSetoranDto): Promise<{
+        setoran: {
+            id: number;
+            nasabahId: number;
+            adminId: number | null;
+            userId: number;
+            jumlah: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
+        };
+        kategori: {
+            id: number;
+            nama_kategori: string;
+            harga_perKilo: number;
+            poin_perKilo: number;
+            jenis_sampaj: import(".prisma/client").$Enums.Jenis;
+            foto: string;
+        };
+    } & {
         berat_kg: number;
         sub_totalPoint: number;
         id: number;
         setoranId: number;
         kategoriId: number;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         setoran: {
             id: number;
             nasabahId: number;
-            adminId: number;
+            adminId: number | null;
             userId: number;
             jumlah: number;
             tanggal: Date;
@@ -40,7 +58,7 @@ export declare class DetailSetoranService {
         setoran: {
             id: number;
             nasabahId: number;
-            adminId: number;
+            adminId: number | null;
             userId: number;
             jumlah: number;
             tanggal: Date;

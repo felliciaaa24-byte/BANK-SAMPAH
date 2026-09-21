@@ -16,9 +16,16 @@ let NasabahService = class NasabahService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createNasabahDto) {
+    async create(dto, userId) {
         return this.prisma.nasabah.create({
-            data: createNasabahDto,
+            data: {
+                nama_nasabah: dto.nama_nasabah,
+                alamat: dto.alamat,
+                telepon: dto.telepon,
+                foto: dto.foto,
+                saldo_poin: 0,
+                userId: userId,
+            },
         });
     }
     findAll() {
@@ -38,10 +45,15 @@ let NasabahService = class NasabahService {
             },
         });
     }
-    update(id, updateNasabahDto) {
+    async update(id, dto) {
         return this.prisma.nasabah.update({
             where: { id },
-            data: updateNasabahDto,
+            data: {
+                nama_nasabah: dto.nama_nasabah,
+                alamat: dto.alamat,
+                telepon: dto.telepon,
+                foto: dto.foto,
+            },
         });
     }
     remove(id) {

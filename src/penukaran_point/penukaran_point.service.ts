@@ -1,6 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
+import { PrismaService } from '../prisma/prisma.service';
 import { CreatePenukaranDto } from './dto/create-penukaran_point.dto';
 import { UpdatePenukaranDto } from './dto/update-penukaran_point.dto';
 
@@ -8,15 +12,94 @@ import { UpdatePenukaranDto } from './dto/update-penukaran_point.dto';
 export class PenukaranService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createPenukaranDto: CreatePenukaranDto) {
-    return this.prisma.penukaran.create({
-      data: {
-        kategoriId: createPenukaranDto.kategoriId,
-        hadiahId: createPenukaranDto.hadiahId,
-        poin_terpakai: createPenukaranDto.poin_terpakai,
-        sisa_point: createPenukaranDto.sisa_point,
-        tanggal: new Date(createPenukaranDto.tanggal),
+  async create(
+    createPenukaranDto: CreatePenukaranDto,
+    userId: number,
+  ) {
+    // Cari nasabah berdasarkan user yang sedang login
+    const nasabah = await this.prisma.nasabah.findUnique({
+      where: {
+        userId: userId,
       },
+    });
+
+    if (!nasabah) {
+      throw new NotFoundException(
+        'Anda belum terdaftar sebagai nasabah',
+      );
+    }
+
+    // Cari hadiah
+    const hadiah = await this.prisma.hadiah.findUnique({
+      where: {
+        id: createPenukaranDto.hadiahId,
+      },
+    });
+
+    if (!hadiah) {
+      throw new NotFoundException(
+        'Hadiah tidak ditemukan',
+      );
+    }
+
+    // Cek stok
+    if (hadiah.stock <= 0) {
+      throw new BadRequestException(
+        'Stok hadiah sudah habis',
+      );
+    }
+
+    // Cek apakah poin cukup
+    if (nasabah.saldo_poin < hadiah.poin_dibutuhkan) {
+      throw new BadRequestException(
+        'Saldo poin tidak mencukupi',
+      );
+    }
+
+    // Hitung otomatis
+    const poinTerpakai = hadiah.poin_dibutuhkan;
+
+    const sisaPoint =
+      nasabah.saldo_poin - poinTerpakai;
+
+    // Simpan penukaran + kurangi saldo + stok
+    return this.prisma.$transaction(async (tx) => {
+      const penukaran = await tx.penukaran.create({
+        data: {
+          kategoriId: createPenukaranDto.kategoriId,
+          hadiahId: hadiah.id,
+          poin_terpakai: poinTerpakai,
+          sisa_point: sisaPoint,
+          tanggal: new Date(),
+          status: 'PENDING',
+        },
+        include: {
+          hadiah: true,
+          kategori: true,
+        },
+      });
+
+      await tx.nasabah.update({
+        where: {
+          id: nasabah.id,
+        },
+        data: {
+          saldo_poin: sisaPoint,
+        },
+      });
+
+      await tx.hadiah.update({
+        where: {
+          id: hadiah.id,
+        },
+        data: {
+          stock: {
+            decrement: 1,
+          },
+        },
+      });
+
+      return penukaran;
     });
   }
 
@@ -39,33 +122,13 @@ export class PenukaranService {
     });
   }
 
-  update(
+  async update(
     id: number,
     updatePenukaranDto: UpdatePenukaranDto,
   ) {
     return this.prisma.penukaran.update({
       where: { id },
       data: {
-        ...(updatePenukaranDto.kategoriId !== undefined && {
-          kategoriId: updatePenukaranDto.kategoriId,
-        }),
-
-        ...(updatePenukaranDto.hadiahId !== undefined && {
-          hadiahId: updatePenukaranDto.hadiahId,
-        }),
-
-        ...(updatePenukaranDto.poin_terpakai !== undefined && {
-          poin_terpakai: updatePenukaranDto.poin_terpakai,
-        }),
-
-        ...(updatePenukaranDto.sisa_point !== undefined && {
-          sisa_point: updatePenukaranDto.sisa_point,
-        }),
-
-        ...(updatePenukaranDto.tanggal !== undefined && {
-          tanggal: new Date(updatePenukaranDto.tanggal),
-        }),
-
         ...(updatePenukaranDto.status !== undefined && {
           status: updatePenukaranDto.status,
         }),
