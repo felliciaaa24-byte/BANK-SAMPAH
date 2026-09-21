@@ -4,14 +4,26 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 export declare class AdminController {
     private readonly adminService;
     constructor(adminService: AdminService);
-    create(CreateAdminDto: CreateAdminDto, req: any): Promise<{
+    create(dto: CreateAdminDto, req: any): Promise<{
         id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
         userId: number;
         nama_unit: string;
         nama_pengelola: string;
         telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
+        setoran: {
+            id: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
+            jumlah: number;
+            nasabahId: number;
+            adminId: number | null;
+            userId: number;
+        }[];
         user: {
             id: number;
             username: string;
@@ -19,23 +31,17 @@ export declare class AdminController {
             password: string;
             role: import(".prisma/client").$Enums.Role;
         };
-        setoran: {
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
-            id: number;
-            userId: number;
-            nasabahId: number;
-            adminId: number | null;
-            jumlah: number;
-        }[];
     } & {
         id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
         userId: number;
         nama_unit: string;
         nama_pengelola: string;
         telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
-    findOne(id: string): import(".prisma/client").Prisma.Prisma__AdminClient<({
+    findPending(): import(".prisma/client").Prisma.PrismaPromise<({
         user: {
             id: number;
             username: string;
@@ -43,34 +49,81 @@ export declare class AdminController {
             password: string;
             role: import(".prisma/client").$Enums.Role;
         };
-        setoran: {
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
-            id: number;
-            userId: number;
-            nasabahId: number;
-            adminId: number | null;
-            jumlah: number;
-        }[];
     } & {
         id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
         userId: number;
         nama_unit: string;
         nama_pengelola: string;
         telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
+    })[]>;
+    findOne(id: number): import(".prisma/client").Prisma.Prisma__AdminClient<({
+        setoran: {
+            id: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
+            jumlah: number;
+            nasabahId: number;
+            adminId: number | null;
+            userId: number;
+        }[];
+        user: {
+            id: number;
+            username: string;
+            email: string;
+            password: string;
+            role: import(".prisma/client").$Enums.Role;
+        };
+    } & {
+        id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
+        userId: number;
+        nama_unit: string;
+        nama_pengelola: string;
+        telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
-    update(id: string, updateAdminDto: UpdateAdminDto): import(".prisma/client").Prisma.Prisma__AdminClient<{
+    approve(id: number): Promise<{
         id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
         userId: number;
         nama_unit: string;
         nama_pengelola: string;
         telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    reject(id: number): Promise<{
+        id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
+        userId: number;
+        nama_unit: string;
+        nama_pengelola: string;
+        telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    update(id: number, updateAdminDto: UpdateAdminDto): import(".prisma/client").Prisma.Prisma__AdminClient<{
+        id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
+        userId: number;
+        nama_unit: string;
+        nama_pengelola: string;
+        telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    remove(id: string): import(".prisma/client").Prisma.Prisma__AdminClient<{
+    remove(id: number): import(".prisma/client").Prisma.Prisma__AdminClient<{
         id: number;
+        status: import(".prisma/client").$Enums.StatusAdmin;
         userId: number;
         nama_unit: string;
         nama_pengelola: string;
         telpon: string;
+        createdAt: Date;
+        updatedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const common_2 = require("@nestjs/common");
+const common_3 = require("@nestjs/common");
 let AdminService = class AdminService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -34,12 +36,56 @@ let AdminService = class AdminService {
             },
         });
     }
+    findPending() {
+        return this.prisma.admin.findMany({
+            where: {
+                status: 'PENDING',
+            },
+            include: {
+                user: true,
+            },
+        });
+    }
     findOne(id) {
         return this.prisma.admin.findUnique({
             where: { id },
             include: {
                 user: true,
                 setoran: true,
+            },
+        });
+    }
+    async approve(id) {
+        const admin = await this.prisma.admin.findUnique({
+            where: { id },
+        });
+        if (!admin) {
+            throw new common_2.NotFoundException('Pengajuan admin tidak ditemukan');
+        }
+        if (admin.status !== 'PENDING') {
+            throw new common_3.BadRequestException('Pengajuan ini sudah diproses');
+        }
+        return this.prisma.$transaction(async (tx) => {
+            const updatedAdmin = await tx.admin.update({
+                where: { id },
+                data: {
+                    status: 'APPROVED',
+                },
+            });
+            await tx.user.update({
+                where: { id: admin.userId },
+                data: {
+                    role: 'ADMIN',
+                },
+            });
+            return updatedAdmin;
+        });
+    }
+    async reject(id) {
+        return this.prisma.admin.update({
+            where: { id },
+            data: {
+                status: 'REJECTED',
             },
         });
     }

@@ -15,19 +15,19 @@ export declare class PenukaranService {
         };
         hadiah: {
             id: number;
+            foto: string;
             nama_hadiah: string;
             poin_dibutuhkan: number;
             stock: number;
-            foto: string;
         };
     } & {
-        poin_terpakai: number;
-        sisa_point: number;
-        tanggal: Date;
         status: import(".prisma/client").$Enums.STATUS;
         id: number;
+        tanggal: Date;
         kategoriId: number;
         hadiahId: number;
+        poin_terpakai: number;
+        sisa_point: number;
     }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         kategori: {
@@ -40,19 +40,19 @@ export declare class PenukaranService {
         };
         hadiah: {
             id: number;
+            foto: string;
             nama_hadiah: string;
             poin_dibutuhkan: number;
             stock: number;
-            foto: string;
         };
     } & {
-        poin_terpakai: number;
-        sisa_point: number;
-        tanggal: Date;
         status: import(".prisma/client").$Enums.STATUS;
         id: number;
+        tanggal: Date;
         kategoriId: number;
         hadiahId: number;
+        poin_terpakai: number;
+        sisa_point: number;
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__PenukaranClient<({
         kategori: {
@@ -65,36 +65,36 @@ export declare class PenukaranService {
         };
         hadiah: {
             id: number;
+            foto: string;
             nama_hadiah: string;
             poin_dibutuhkan: number;
             stock: number;
-            foto: string;
         };
     } & {
-        poin_terpakai: number;
-        sisa_point: number;
-        tanggal: Date;
         status: import(".prisma/client").$Enums.STATUS;
         id: number;
+        tanggal: Date;
         kategoriId: number;
         hadiahId: number;
+        poin_terpakai: number;
+        sisa_point: number;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: number, updatePenukaranDto: UpdatePenukaranDto): Promise<{
-        poin_terpakai: number;
-        sisa_point: number;
-        tanggal: Date;
         status: import(".prisma/client").$Enums.STATUS;
         id: number;
+        tanggal: Date;
         kategoriId: number;
         hadiahId: number;
+        poin_terpakai: number;
+        sisa_point: number;
     }>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__PenukaranClient<{
-        poin_terpakai: number;
-        sisa_point: number;
-        tanggal: Date;
         status: import(".prisma/client").$Enums.STATUS;
         id: number;
+        tanggal: Date;
         kategoriId: number;
         hadiahId: number;
+        poin_terpakai: number;
+        sisa_point: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

@@ -3,7 +3,8 @@ import { PrismaService } from '../prisma/prisma.service';
 
 import { CreateDetailSetoranDto } from './dto/create-detail_sampah.dto';
 import { UpdateDetailSetoranDto } from './dto/update-detail_sampah.dto';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, BadRequestException,
+  ForbiddenException, } from '@nestjs/common';
 
 @Injectable()
 export class DetailSetoranService {

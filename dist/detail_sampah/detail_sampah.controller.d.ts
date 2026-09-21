@@ -6,91 +6,91 @@ export declare class DetailSetoranController {
     constructor(detailSetoranService: DetailSetoranService);
     create(createDetailSetoranDto: CreateDetailSetoranDto): Promise<{
         setoran: {
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
             id: number;
-            userId: number;
             nasabahId: number;
             adminId: number | null;
+            userId: number;
             jumlah: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
         };
         kategori: {
             id: number;
-            foto: string;
             nama_kategori: string;
             harga_perKilo: number;
             poin_perKilo: number;
             jenis_sampaj: import(".prisma/client").$Enums.Jenis;
+            foto: string;
         };
     } & {
-        id: number;
-        kategoriId: number;
         berat_kg: number;
         sub_totalPoint: number;
+        id: number;
         setoranId: number;
+        kategoriId: number;
     }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         setoran: {
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
             id: number;
-            userId: number;
             nasabahId: number;
             adminId: number | null;
+            userId: number;
             jumlah: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
         };
         kategori: {
             id: number;
-            foto: string;
             nama_kategori: string;
             harga_perKilo: number;
             poin_perKilo: number;
             jenis_sampaj: import(".prisma/client").$Enums.Jenis;
+            foto: string;
         };
     } & {
-        id: number;
-        kategoriId: number;
         berat_kg: number;
         sub_totalPoint: number;
+        id: number;
         setoranId: number;
+        kategoriId: number;
     })[]>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__DetailSetoranClient<({
         setoran: {
-            tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
             id: number;
-            userId: number;
             nasabahId: number;
             adminId: number | null;
+            userId: number;
             jumlah: number;
+            tanggal: Date;
+            status: import(".prisma/client").$Enums.STATUS;
         };
         kategori: {
             id: number;
-            foto: string;
             nama_kategori: string;
             harga_perKilo: number;
             poin_perKilo: number;
             jenis_sampaj: import(".prisma/client").$Enums.Jenis;
+            foto: string;
         };
     } & {
-        id: number;
-        kategoriId: number;
         berat_kg: number;
         sub_totalPoint: number;
+        id: number;
         setoranId: number;
+        kategoriId: number;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, updateDetailSetoranDto: UpdateDetailSetoranDto): import(".prisma/client").Prisma.Prisma__DetailSetoranClient<{
-        id: number;
-        kategoriId: number;
         berat_kg: number;
         sub_totalPoint: number;
+        id: number;
         setoranId: number;
+        kategoriId: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__DetailSetoranClient<{
-        id: number;
-        kategoriId: number;
         berat_kg: number;
         sub_totalPoint: number;
+        id: number;
         setoranId: number;
+        kategoriId: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

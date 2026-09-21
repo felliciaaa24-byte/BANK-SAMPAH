@@ -27,28 +27,37 @@ let AdminController = class AdminController {
     constructor(adminService) {
         this.adminService = adminService;
     }
-    create(CreateAdminDto, req) {
-        return this.adminService.create(CreateAdminDto, req.user.id);
+    create(dto, req) {
+        return this.adminService.create(dto, req.user.id);
     }
     findAll() {
         return this.adminService.findAll();
     }
+    findPending() {
+        return this.adminService.findPending();
+    }
     findOne(id) {
-        return this.adminService.findOne(+id);
+        return this.adminService.findOne(id);
+    }
+    approve(id) {
+        return this.adminService.approve(id);
+    }
+    reject(id) {
+        return this.adminService.reject(id);
     }
     update(id, updateAdminDto) {
-        return this.adminService.update(+id, updateAdminDto);
+        return this.adminService.update(id, updateAdminDto);
     }
     remove(id) {
-        return this.adminService.remove(+id);
+        return this.adminService.remove(id);
     }
 };
 exports.AdminController = AdminController;
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('pengajuan'),
     (0, swagger_2.ApiBearerAuth)(),
     (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, roles_decorator_1.Roles)('NASABAH'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -56,33 +65,61 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "create", null);
 __decorate([
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('pengajuan'),
     (0, swagger_2.ApiBearerAuth)(),
     (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)('PEMILIK'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], AdminController.prototype, "findAll", null);
+], AdminController.prototype, "findPending", null);
 __decorate([
-    (0, common_1.Get)(':id'),
     (0, swagger_2.ApiBearerAuth)(),
     (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)('PEMILIK'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Patch)(':id/approve'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('PEMILIK'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "approve", null);
+__decorate([
+    (0, common_1.Patch)(':id/reject'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('PEMILIK'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "reject", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, swagger_2.ApiBearerAuth)(),
     (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)('ADMIN'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, roles_decorator_1.Roles)('PEMILIK'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_admin_dto_1.UpdateAdminDto]),
+    __metadata("design:paramtypes", [Number, update_admin_dto_1.UpdateAdminDto]),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "update", null);
 __decorate([
@@ -90,9 +127,9 @@ __decorate([
     (0, swagger_2.ApiBearerAuth)(),
     (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)('PEMILIK'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "remove", null);
 exports.AdminController = AdminController = __decorate([

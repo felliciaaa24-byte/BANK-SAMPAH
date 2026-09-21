@@ -28,6 +28,15 @@ let SetoranController = class SetoranController {
     create(createSetoranDto, req) {
         return this.setoranService.create(createSetoranDto, req.user.id);
     }
+    findPengajuan(req) {
+        return this.setoranService.findPengajuanByAdmin(req.user.id);
+    }
+    approve(id, req) {
+        return this.setoranService.approve(id, req.user.id);
+    }
+    reject(id, req) {
+        return this.setoranService.reject(id, req.user.id);
+    }
 };
 exports.SetoranController = SetoranController;
 __decorate([
@@ -41,6 +50,38 @@ __decorate([
     __metadata("design:paramtypes", [create_setor_dto_1.CreateSetoranDto, Object]),
     __metadata("design:returntype", void 0)
 ], SetoranController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)('pengajuan'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], SetoranController.prototype, "findPengajuan", null);
+__decorate([
+    (0, common_1.Patch)(':id/approve'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", void 0)
+], SetoranController.prototype, "approve", null);
+__decorate([
+    (0, common_1.Patch)(':id/reject'),
+    (0, swagger_2.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", void 0)
+], SetoranController.prototype, "reject", null);
 exports.SetoranController = SetoranController = __decorate([
     (0, swagger_1.ApiTags)('Setoran'),
     (0, common_1.Controller)('setoran'),

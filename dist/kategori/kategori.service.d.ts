@@ -15,15 +15,15 @@ export declare class KategoriService {
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         detailSetoran: {
             id: number;
-            setoranId: number;
-            kategoriId: number;
             berat_kg: number;
             sub_totalPoint: number;
+            setoranId: number;
+            kategoriId: number;
         }[];
         penukaran: {
+            status: import(".prisma/client").$Enums.STATUS;
             id: number;
             tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
             kategoriId: number;
             hadiahId: number;
             poin_terpakai: number;
@@ -40,15 +40,15 @@ export declare class KategoriService {
     findOne(id: number): import(".prisma/client").Prisma.Prisma__KategoriClient<({
         detailSetoran: {
             id: number;
-            setoranId: number;
-            kategoriId: number;
             berat_kg: number;
             sub_totalPoint: number;
+            setoranId: number;
+            kategoriId: number;
         }[];
         penukaran: {
+            status: import(".prisma/client").$Enums.STATUS;
             id: number;
             tanggal: Date;
-            status: import(".prisma/client").$Enums.STATUS;
             kategoriId: number;
             hadiahId: number;
             poin_terpakai: number;
